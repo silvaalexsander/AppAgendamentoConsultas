@@ -2,25 +2,17 @@ import 'dart:convert';
 
 import 'package:agendamentohospitalar/models/recipient.dart';
 import 'package:agendamentohospitalar/models/recipient_list.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class Login {
-
-
-   static Future<Recipient> getRecipient(String email, String password, String token) async {
-    var url = 'https://192.168.3.16:7026/email/$email/senha/$password';
-    var header = {'Content-Type': 'application/json', 'Authorization': token};
-    var response = await http.get(Uri.parse(url), headers: header);
-    Map<String, dynamic> mapResponse = json.decode(response.body);
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      Recipient recipient = Recipient.fromJson(mapResponse);
-      return recipient;
-    }
-    throw Exception(response.statusCode);
-  }
+class Login with ChangeNotifier {
+  static String? token;
+  static String? expireTo;
+  static Recipient? recipientMaster;
 
   static Future<bool> login(String email, String password) async {
-    var url = 'https://192.168.3.16:7026/api/t';
+    String baseUrl = 'https://192.168.3.16:7026';
+    var url = '$baseUrl/api/t';
     var header = {'Content-Type': 'application/json'};
 
     Map data = {
@@ -31,12 +23,24 @@ class Login {
     var body = json.encode(data);
 
     var response = await http.post(Uri.parse(url), headers: header, body: body);
-    print(response.statusCode);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       Map mapResponse = json.decode(response.body);
-      String token = mapResponse['token'];
-      await getRecipient(email, password, token);
+      token = mapResponse['token'];
+      expireTo = mapResponse['expiration'];
+      var recipient = mapResponse['beneficiario'];
+      recipient = recipient['result'];
+      recipientMaster = Recipient(
+        idBeneficiario: recipient['idBeneficiario'],
+        nome: recipient['nome'],
+        cpf: recipient['cpf'],
+        telefone: recipient['telefone'],
+        endereco: recipient['endereco'],
+        numeroCarteirinha: recipient['numeroCarteirinha'],
+        ativo: recipient['ativo'],
+        email: recipient['email'],
+        senha: recipient['senha'],
+      );
       return true;
     } else {
       return false;

@@ -1,3 +1,4 @@
+import 'package:agendamentohospitalar/data/recipients_data.dart';
 import 'package:agendamentohospitalar/models/recipient.dart';
 import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,14 +6,9 @@ import 'package:flutter/cupertino.dart';
 import '../services/requests_http.dart';
 
 class RecipientList with ChangeNotifier, AsyncStateMixin {
-  final List<Recipient> _items = [];
-
+  List<Recipient> _items = []; //recipientsData;
+ 
   List<Recipient> get items => [..._items];
-
-  Future<void> addRecipient(Recipient recipient) async{
-    _items.add(recipient);
-    notifyListeners();
-  }
 
   Future<bool> createRecipient(
     String nome,
@@ -52,6 +48,4 @@ class RecipientList with ChangeNotifier, AsyncStateMixin {
   }
 
 
-
-  
 }

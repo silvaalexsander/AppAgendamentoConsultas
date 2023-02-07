@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:agendamentohospitalar/models/login_api.dart';
 import 'package:agendamentohospitalar/models/recipient_list.dart';
 import 'package:agendamentohospitalar/models/scheduling_list.dart';
 import 'package:agendamentohospitalar/pages/auth_page.dart';
@@ -53,6 +54,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => RecipientList(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Login(),
         ),
       ],
       child: MaterialApp(

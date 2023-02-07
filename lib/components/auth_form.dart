@@ -27,6 +27,7 @@ class _AuthFormState extends State<AuthForm> {
   String? _password;
   AuthMode _authMode = AuthMode.login;
   bool _isLogin() => _authMode == AuthMode.login;
+  Login login = Login();
 
   void _switchAuthMode() {
     setState(() {
@@ -50,7 +51,7 @@ class _AuthFormState extends State<AuthForm> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Usuario ou senha incorretos!'),
+          content: const Text('Usuario ou senha incorretos!'),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );

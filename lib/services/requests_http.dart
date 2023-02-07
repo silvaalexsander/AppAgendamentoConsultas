@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'package:agendamentohospitalar/models/login_api.dart';
 import 'package:agendamentohospitalar/models/recipient.dart';
-import 'package:agendamentohospitalar/models/recipient_list.dart';
 import 'package:agendamentohospitalar/models/scheduling.dart';
 import 'package:http/http.dart' as http;
 import '../models/hospital.dart';
@@ -9,6 +7,7 @@ import '../models/profissional.dart';
 import '../models/specialty.dart';
 
 class RequestHttp {
+
   static String baseUrl = 'https://192.168.3.16:7026/api';
   static Future<List<Specialty>> getSpecialties() async {
     try {
@@ -91,16 +90,6 @@ class RequestHttp {
     }
   }
 
-  static Future<Recipient> getRecipient() async {
-    var response = await http.get(Uri.parse('$baseUrl/Beneficiario/'));
-    if (response.statusCode == 200) {
-      return Recipient.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load recipient');
-    }
-  }
-
-
   static Future<bool> postRecipient(Recipient recipient) async {
     var header = {'Content-Type': 'application/json'};
 
@@ -130,6 +119,20 @@ class RequestHttp {
       return true;
     } else {
       throw Exception('Failed to create recipient.');
+    }
+  }
+
+
+   static Future<Recipient> getRecipient(String email, String password, String token) async {
+    var url = 'https://192.168.3.16:7026/email/$email/senha/$password';
+    var header = {'Content-Type': 'application/json', 'Authorization': token};
+    var response = await http.get(Uri.parse(url), headers: header);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      Map<String, dynamic> mapResponse = json.decode(response.body);
+      Recipient recipient = Recipient.fromJson(mapResponse);
+      return recipient;
+    } else {
+      throw Exception('Failed to load recipient');
     }
   }
 }
