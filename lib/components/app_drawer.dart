@@ -1,5 +1,9 @@
+import 'package:agendamentohospitalar/pages/home_page.dart';
 import 'package:agendamentohospitalar/utils/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../models/login_api.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -22,33 +26,48 @@ class AppDrawer extends StatelessWidget {
                 onTap: () =>
                     Navigator.of(context).popAndPushNamed(AppRoutes.newquery)),
           ),
-          const Divider(),
-          Card(
-            child: ListTile(
-                leading: Icon(Icons.calendar_today,
-                    color: Theme.of(context).colorScheme.primary),
-                title: const Text('Agendamentos'),
-                onTap: () => Navigator.of(context)
-                    .popAndPushNamed(AppRoutes.listqueries)),
-          ),
-          const Divider(),
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.paste_sharp,
-                  color: Theme.of(context).colorScheme.primary),
-              title: const Text('Consultas Realizadas'),
-              onTap: () {
-                Navigator.of(context).popAndPushNamed(AppRoutes.test);
-              },
-            ),
-          ),
+          // const Divider(),
+          // Card(
+          //   child: ListTile(
+          //       leading: Icon(Icons.calendar_today,
+          //           color: Theme.of(context).colorScheme.primary),
+          //       title: const Text('Agendamentos'),
+          //       onTap: () => Navigator.of(context)
+          //           .popAndPushNamed(AppRoutes.listqueries)),
+          // ),
+          // const Divider(),
+          // Card(
+          //   child: ListTile(
+          //     leading: Icon(Icons.paste_sharp,
+          //         color: Theme.of(context).colorScheme.primary),
+          //     title: const Text('Consultas Realizadas'),
+          //     onTap: () {
+          //       Navigator.of(context).popAndPushNamed(AppRoutes.test);
+          //     },
+          //   ),
+          // ),
           const Divider(),
           Card(
             child: ListTile(
               leading: Icon(Icons.settings,
                   color: Theme.of(context).colorScheme.primary),
               title: const Text('Configurações'),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).popAndPushNamed(AppRoutes.settings);
+              },
+            ),
+          ),
+          const Divider(),
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.exit_to_app,
+                  color: Theme.of(context).colorScheme.primary),
+              title: const Text('Sair'),
+              onTap: () {
+                var login = Provider.of<Login>(context, listen: false);
+                login.logout();
+                Navigator.of(context).pushReplacementNamed(AppRoutes.authpage);
+              },
             ),
           ),
         ],

@@ -38,6 +38,7 @@ dependencies:
   flutter_datetime_picker: ^1.5.1
   http: ^0.13.3
   asyncstate: ^0.0.3
+  flutter_sms: ^2.3.3
   
 
 

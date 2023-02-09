@@ -35,8 +35,12 @@ class Scheduling {
   });
 
   factory Scheduling.fromJson(Map<String, dynamic> json) {
-    var formatter = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-    DateTime dataHoraAgendamento = formatter.parse(json['dataHoraAgendamento']);
+    String dataHoraAgendamentoString = json['dataHoraAgendamento'];
+    DateTime? dataHoraAgendamento = DateTime.tryParse(dataHoraAgendamentoString);
+    dataHoraAgendamento ??= DateFormat('yyyy-MM-ddTHH:mm:ss').parse(
+          dataHoraAgendamentoString.substring(0, 19) +
+              dataHoraAgendamentoString.substring(23, 29));
+
     return Scheduling(
         idAgendamento: json['idAgendamento'],
         idHospital: json['idHospital'],
@@ -44,18 +48,26 @@ class Scheduling {
         idProfissional: json['idProfissional'],
         dataHoraAgendamento: dataHoraAgendamento,
         idBeneficiario: json['idBeneficiario'],
-        ativo: json['ativo'] == 1 ? true : false);
+        ativo: json['ativo'] == 1 ? true : false,
+        idBeneficiarioNavigation: json['idBeneficiarioNavigation'] != null
+            ? Recipient.fromJson(json['idBeneficiarioNavigation'])
+            : null,
+        idEspecialidadeNavigation: json['idEspecialidadeNavigation'] != null ? Specialty.fromJson(json['idEspecialidadeNavigation']) : null,
+        idProfissionalNavigation: json['idProfissionalNavigation'] != null ? Profissional.fromJson(json['idProfissionalNavigation']) : null,
+        idHospitalNavigation: json['idHospitalNavigation'] != null ? Hospital.fromJson(json['idHospitalNavigation']) : null,
+        );
+        
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['idAgendamento'] = this.idAgendamento;
-    data['idHospital'] = this.idHospital;
-    data['idEspecialidade'] = this.idEspecialidade;
-    data['idProfissional'] = this.idProfissional;
-    data['dataHoraAgendamento'] = this.dataHoraAgendamento.toIso8601String();
-    data['idBeneficiario'] = this.idBeneficiario;
-    data['ativo'] = this.ativo ? 1 : 0;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['idAgendamento'] = idAgendamento;
+    data['idHospital'] = idHospital;
+    data['idEspecialidade'] = idEspecialidade;
+    data['idProfissional'] = idProfissional;
+    data['dataHoraAgendamento'] = dataHoraAgendamento.toIso8601String();
+    data['idBeneficiario'] = idBeneficiario;
+    data['ativo'] = ativo ? 1 : 0;
     return data;
   }
 }

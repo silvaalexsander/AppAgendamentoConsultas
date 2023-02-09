@@ -12,7 +12,7 @@ class QueryScheduling extends StatelessWidget {
   Widget build(BuildContext context) {
     final schedulinglist = Provider.of<ScheduligList>(context);
 
-    void cancelQuery(Scheduling scheduling) {
+    Future<void> cancelQuery(Scheduling scheduling) async {
       Future.delayed(const Duration(seconds: 0), () {
         showDialog(
           context: context,
@@ -30,7 +30,6 @@ class QueryScheduling extends StatelessWidget {
                 onPressed: () {
                   schedulinglist.remove(scheduling.idAgendamento);
                   Navigator.of(context).pushReplacementNamed(AppRoutes.home);
-                  schedulinglist.remove(scheduling.idAgendamento);
                 },
                 child: const Text('Sim'),
               ),
@@ -206,7 +205,7 @@ class QueryScheduling extends StatelessWidget {
                             ),
                           ),
                           Text(
-                              DateFormat('MMM')
+                              DateFormat.MMMM("pt_BR")
                                   .format(scheduling.dataHoraAgendamento),
                               style: const TextStyle(
                                 fontSize: 14,
@@ -214,7 +213,7 @@ class QueryScheduling extends StatelessWidget {
                                 color: Colors.white,
                               )),
                           Padding(
-                            padding: const EdgeInsets.only(top: 5),
+                            padding: const EdgeInsets.only(top: 8),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -223,9 +222,8 @@ class QueryScheduling extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                                 Text(
-                                  scheduling.horario
-                                      .toString()
-                                      .replaceRange(5, 8, ''),
+                                  DateFormat('HH:mm')
+                                      .format(scheduling.dataHoraAgendamento),
                                   style: const TextStyle(
                                       fontSize: 15, color: Colors.white),
                                 ),

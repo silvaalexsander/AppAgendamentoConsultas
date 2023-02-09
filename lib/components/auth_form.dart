@@ -23,8 +23,6 @@ class _AuthFormState extends State<AuthForm> {
   final _telefoneController = TextEditingController();
   final _enderecoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  String? _email;
-  String? _password;
   AuthMode _authMode = AuthMode.login;
   bool _isLogin() => _authMode == AuthMode.login;
   Login login = Login();
@@ -40,7 +38,6 @@ class _AuthFormState extends State<AuthForm> {
   }
 
   Future<void> _submit() async {
-    print('Submit Login');
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -114,7 +111,7 @@ class _AuthFormState extends State<AuthForm> {
                       )),
                   validator: (value) {
                     if (value!.isEmpty || value.length < 10) {
-                      return 'Informe um nome válido!';
+                      return value.isEmpty? 'Informe um nome válido!' : 'Nome precisa ter no mínimo 10 caracteres!';
                     }
                     return null;
                   },
@@ -132,7 +129,7 @@ class _AuthFormState extends State<AuthForm> {
                       )),
                   validator: (value) {
                     if (value!.isEmpty || value.trim().length < 11) {
-                      return 'Informe um CPF válido!';
+                      return value.isEmpty? 'Informe um CPF válido!' : 'CPF precisa ter 11 caracteres!';
                     }
                     return null;
                   },
@@ -167,8 +164,8 @@ class _AuthFormState extends State<AuthForm> {
                         color: Theme.of(context).colorScheme.secondary,
                       )),
                   validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Informe um número válido!';
+                    if (value!.isEmpty || value.trim().length < 11) {
+                      return value.isEmpty? 'Informe um número válido!' : 'Número precisa ter 11 caracteres!';
                     }
                     return null;
                   },
@@ -222,7 +219,7 @@ class _AuthFormState extends State<AuthForm> {
                 obscureText: true,
                 validator: (value) {
                   if (value!.isEmpty || value.length < 5) {
-                    return 'Informe uma senha válida!';
+                    return value.isEmpty ? 'Informe uma senha válida!' : 'Senha precisa ter no mínimo 5 caracteres!';
                   }
                   return null;
                 },
@@ -242,8 +239,8 @@ class _AuthFormState extends State<AuthForm> {
                       )),
                   obscureText: true,
                   validator: (value) {
-                    if (value!.isEmpty || value.length < 5) {
-                      return 'Informe uma senha válida!';
+                    if (value!.isEmpty || value != _passwordController.text) {
+                      return value.isEmpty? 'Informe uma senha válida!' : 'Senhas não conferem!';
                     }
                     return null;
                   },
@@ -258,8 +255,6 @@ class _AuthFormState extends State<AuthForm> {
                   onPressed: () {
                     // _submit();
                     setState(() {
-                      _email = _emailController.text;
-                      _password = _passwordController.text;
                     });
                     _isLogin() ? _submit() : _submitRegister();
                   },

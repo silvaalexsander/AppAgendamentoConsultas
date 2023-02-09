@@ -1,14 +1,15 @@
 import 'dart:convert';
 
 import 'package:agendamentohospitalar/models/recipient.dart';
-import 'package:agendamentohospitalar/models/recipient_list.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
 
 class Login with ChangeNotifier {
   static String? token;
   static String? expireTo;
   static Recipient? recipientMaster;
+  
 
   static Future<bool> login(String email, String password) async {
     String baseUrl = 'https://192.168.3.16:7026';
@@ -45,5 +46,12 @@ class Login with ChangeNotifier {
     } else {
       return false;
     }
+  }
+
+  void logout(){
+    token = null;
+    expireTo = null;
+    recipientMaster = null;
+    notifyListeners();
   }
 }

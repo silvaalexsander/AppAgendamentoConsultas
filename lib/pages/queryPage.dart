@@ -9,7 +9,6 @@ class QueryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hospitalList = Provider.of<HospitalList>(context);
     return Scaffold(
       appBar: AppBar(
         title: Container(

@@ -47,5 +47,34 @@ class RecipientList with ChangeNotifier, AsyncStateMixin {
     return false;
   }
 
+  Future<bool> updateRecipient(
+    int idBeneficiario,
+    String nome,
+    String cpf,
+    String telefone,
+    String endereco,
+    String numeroCarteirinha,
+    String email,
+    String senha,
+  ) async {
+    var newRecipient = Recipient(
+      idBeneficiario: idBeneficiario,
+      nome: nome,
+      cpf: cpf,
+      telefone: telefone,
+      endereco: endereco,
+      numeroCarteirinha: numeroCarteirinha,
+      ativo: true,
+      email: email,
+      senha: senha,
+    );
+    if (await RequestHttp.patchRecipient(newRecipient)) {
+      notifyListeners();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 
 }

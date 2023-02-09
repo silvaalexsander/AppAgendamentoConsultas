@@ -5,8 +5,10 @@ import 'package:agendamentohospitalar/models/recipient_list.dart';
 import 'package:agendamentohospitalar/models/scheduling_list.dart';
 import 'package:agendamentohospitalar/pages/auth_page.dart';
 import 'package:agendamentohospitalar/pages/list_query_page.dart';
+import 'package:agendamentohospitalar/pages/profile_page.dart';
 import 'package:agendamentohospitalar/pages/queryPage.dart';
 import 'package:agendamentohospitalar/pages/home_page.dart';
+import 'package:agendamentohospitalar/pages/settings_page.dart';
 import 'package:agendamentohospitalar/utils/app_routes.dart';
 import 'package:asyncstate/class/async_class.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +60,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Login(),
         ),
+        
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -66,7 +69,7 @@ class MyApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate
         ],
         navigatorObservers: [AsyncState.observer],
-        supportedLocales: [const Locale('pt', 'BR')],
+        supportedLocales: const [Locale('pt', 'BR')],
         theme: ThemeData(
             colorScheme: ColorScheme.fromSwatch().copyWith(
               primary: const Color.fromRGBO(0, 77, 141, 1),
@@ -81,6 +84,8 @@ class MyApp extends StatelessWidget {
           AppRoutes.newquery: (context) => const QueryPage(),
           AppRoutes.querydetails: (context) => const QueryDetailPage(),
           AppRoutes.listqueries: (context) => const ListQuery(),
+          AppRoutes.settings: (context) => const SettingsPage(),
+          AppRoutes.profile: (context) => const ProfilePage(),
           AppRoutes.test: (context) => const TestePage(),
         },
         debugShowCheckedModeBanner: false,

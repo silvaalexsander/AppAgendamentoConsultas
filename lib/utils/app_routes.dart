@@ -5,4 +5,6 @@ class AppRoutes{
   static const querydetails = '/querydetails';
   static const listqueries = '/listqueries';
   static const test = '/test';
+  static const settings = '/settings';
+  static const profile = '/profile';
 }

@@ -145,7 +145,9 @@ class QueryDetailPage extends StatelessWidget {
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
-                          Text(scheduling.horario.toString(),
+                          Text(
+                              DateFormat('HH:mm')
+                                  .format(scheduling.dataHoraAgendamento),
                               style: const TextStyle(
                                 fontSize: 18,
                               )),

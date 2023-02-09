@@ -78,15 +78,19 @@ class _DrowpDownButtonState extends State<DrowpDownButton> {
     final arg = ModalRoute.of(context)?.settings.arguments;
     if (arg != null) {
       final schedulingData = arg as Scheduling;
-      idHospital = schedulingData.idHospital;
-      idProfissional = schedulingData.idProfissional;
-      idSpecialty = schedulingData.idEspecialidade;
-      hospitalSelected = schedulingData.idHospitalNavigation!.nome;
-      profissionalSelected = schedulingData.idProfissionalNavigation!.nome;
-      specialtySelected = schedulingData.idEspecialidadeNavigation!.nome;
-      horarioSelected = schedulingData.horario;
-      _selectedDate = schedulingData.dataHoraAgendamento;
+      String horario = DateFormat('HH:mm:ss')
+          .format(schedulingData.dataHoraAgendamento)
+          .toString();
+      horarioMarcado = horario;
       setState(() {
+        idHospital = schedulingData.idHospital;
+        idProfissional = schedulingData.idProfissional;
+        idSpecialty = schedulingData.idEspecialidade;
+        hospitalSelected = schedulingData.idHospitalNavigation!.nome;
+        profissionalSelected = schedulingData.idProfissionalNavigation!.nome;
+        specialtySelected = schedulingData.idEspecialidadeNavigation!.nome;
+        horarioSelected = horario;
+        _selectedDate = schedulingData.dataHoraAgendamento;
         exibButton = true;
       });
     }
@@ -350,12 +354,7 @@ class _DrowpDownButtonState extends State<DrowpDownButton> {
                     ],
                   ),
                 ),
-              if (_selectedDate != null &&
-                  hospitalSelected != '' &&
-                  profissionalSelected != '' &&
-                  specialtySelected != '' &&
-                  horarioMarcado != '' &&
-                  (exibButton == true))
+              if (exibButton == true)
                 Padding(
                   padding: const EdgeInsets.only(top: 35),
                   child: Row(
