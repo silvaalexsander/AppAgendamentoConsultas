@@ -19,10 +19,16 @@ class ScheduligList with ChangeNotifier {
   Hospital? hospital;
   Profissional? profissional;
   Specialty? specialty;
+  bool isLoading = false;
 
   void ordena() {
     _items
         .sort((a, b) => a.dataHoraAgendamento.compareTo(b.dataHoraAgendamento));
+  }
+
+  Future<void> alterState() async {
+    isLoading = !isLoading;
+    notifyListeners();
   }
 
   Future<void> verifyScheduling(
@@ -35,6 +41,7 @@ class ScheduligList with ChangeNotifier {
     String data = diaMarcado.toString().substring(0, 10);
     data = ('$data' 'T$horarioMarcado.000');
     diaMarcado = DateTime.parse(data);
+    await alterState();
     await add(Scheduling(
       idAgendamento: Random().nextInt(1000),
       idHospital: idHospital,
@@ -51,6 +58,7 @@ class ScheduligList with ChangeNotifier {
           await _profissionalList.getProfissional(idProfissional),
       idHospitalNavigation: await _hospitalList.getHospital(idHospital),
     ));
+    await alterState();
     notifyListeners();
   }
 
@@ -61,17 +69,20 @@ class ScheduligList with ChangeNotifier {
     _items.add(scheduling);
 
     // Ordena a lista utilizando o sort()
-    _items.sort((a, b) => a.dataHoraAgendamento.compareTo(b.dataHoraAgendamento));
+    _items
+        .sort((a, b) => a.dataHoraAgendamento.compareTo(b.dataHoraAgendamento));
 
     notifyListeners();
   }
 
   Future<void> remove(int idAgendamento) async {
+    await alterState();
     int index =
         _items.indexWhere((element) => element.idAgendamento == idAgendamento);
     if (index != -1) {
       _items.removeAt(index);
       await RequestHttp.deleteScheduling(idAgendamento);
+      await alterState();
       notifyListeners();
     }
   }
@@ -84,7 +95,7 @@ class ScheduligList with ChangeNotifier {
     String horarioMarcado,
     DateTime diaMarcado,
   ) async {
-     String data = diaMarcado.toString().substring(0, 10);
+    String data = diaMarcado.toString().substring(0, 10);
     data = ('$data' 'T$horarioMarcado.000');
     diaMarcado = DateTime.parse(data);
     final index =

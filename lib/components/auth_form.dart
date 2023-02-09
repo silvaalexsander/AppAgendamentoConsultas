@@ -23,6 +23,7 @@ class _AuthFormState extends State<AuthForm> {
   final _telefoneController = TextEditingController();
   final _enderecoController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
   AuthMode _authMode = AuthMode.login;
   bool _isLogin() => _authMode == AuthMode.login;
   Login login = Login();
@@ -40,12 +41,19 @@ class _AuthFormState extends State<AuthForm> {
   Future<void> _submit() async {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
-      return;
+        return;
+    }else{
+          setState(() {
+        _isLoading = true;
+      });
     }
     _formKey.currentState!.save();
     if (await Login.login(_emailController.text, _passwordController.text)) {
       await Navigator.of(context).pushReplacementNamed(AppRoutes.home);
     } else {
+      setState(() {
+        _isLoading = false;
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text('Usuario ou senha incorretos!'),
@@ -111,7 +119,9 @@ class _AuthFormState extends State<AuthForm> {
                       )),
                   validator: (value) {
                     if (value!.isEmpty || value.length < 10) {
-                      return value.isEmpty? 'Informe um nome válido!' : 'Nome precisa ter no mínimo 10 caracteres!';
+                      return value.isEmpty
+                          ? 'Informe um nome válido!'
+                          : 'Nome precisa ter no mínimo 10 caracteres!';
                     }
                     return null;
                   },
@@ -129,7 +139,9 @@ class _AuthFormState extends State<AuthForm> {
                       )),
                   validator: (value) {
                     if (value!.isEmpty || value.trim().length < 11) {
-                      return value.isEmpty? 'Informe um CPF válido!' : 'CPF precisa ter 11 caracteres!';
+                      return value.isEmpty
+                          ? 'Informe um CPF válido!'
+                          : 'CPF precisa ter 11 caracteres!';
                     }
                     return null;
                   },
@@ -165,7 +177,9 @@ class _AuthFormState extends State<AuthForm> {
                       )),
                   validator: (value) {
                     if (value!.isEmpty || value.trim().length < 11) {
-                      return value.isEmpty? 'Informe um número válido!' : 'Número precisa ter 11 caracteres!';
+                      return value.isEmpty
+                          ? 'Informe um número válido!'
+                          : 'Número precisa ter 11 caracteres!';
                     }
                     return null;
                   },
@@ -219,7 +233,9 @@ class _AuthFormState extends State<AuthForm> {
                 obscureText: true,
                 validator: (value) {
                   if (value!.isEmpty || value.length < 5) {
-                    return value.isEmpty ? 'Informe uma senha válida!' : 'Senha precisa ter no mínimo 5 caracteres!';
+                    return value.isEmpty
+                        ? 'Informe uma senha válida!'
+                        : 'Senha precisa ter no mínimo 5 caracteres!';
                   }
                   return null;
                 },
@@ -240,7 +256,9 @@ class _AuthFormState extends State<AuthForm> {
                   obscureText: true,
                   validator: (value) {
                     if (value!.isEmpty || value != _passwordController.text) {
-                      return value.isEmpty? 'Informe uma senha válida!' : 'Senhas não conferem!';
+                      return value.isEmpty
+                          ? 'Informe uma senha válida!'
+                          : 'Senhas não conferem!';
                     }
                     return null;
                   },
@@ -253,9 +271,6 @@ class _AuthFormState extends State<AuthForm> {
                 width: deviceWidth * 0.35,
                 child: ElevatedButton(
                   onPressed: () {
-                    // _submit();
-                    setState(() {
-                    });
                     _isLogin() ? _submit() : _submitRegister();
                   },
                   style: ElevatedButton.styleFrom(
@@ -264,11 +279,13 @@ class _AuthFormState extends State<AuthForm> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: Text(_isLogin() ? 'Entrar' : 'Cadastrar',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                      )),
+                  child: _isLoading
+                      ? const CircularProgressIndicator()
+                      : Text(_isLogin() ? 'Entrar' : 'Cadastrar',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                          )),
                 ),
               ),
               Row(

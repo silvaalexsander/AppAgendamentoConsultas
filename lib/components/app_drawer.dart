@@ -66,7 +66,7 @@ class AppDrawer extends StatelessWidget {
               onTap: () {
                 var login = Provider.of<Login>(context, listen: false);
                 login.logout();
-                Navigator.of(context).pushReplacementNamed(AppRoutes.authpage);
+                Navigator.of(context).popAndPushNamedls(AppRoutes.authpage);
               },
             ),
           ),

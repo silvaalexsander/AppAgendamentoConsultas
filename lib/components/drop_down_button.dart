@@ -9,6 +9,7 @@ import '../models/specialty_list.dart';
 import 'package:intl/intl.dart';
 
 class DrowpDownButton extends StatefulWidget {
+  
   const DrowpDownButton({super.key});
 
   @override
@@ -40,7 +41,6 @@ class _DrowpDownButtonState extends State<DrowpDownButton> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     iniciaLista();
   }

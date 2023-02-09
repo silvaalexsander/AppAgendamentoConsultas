@@ -187,7 +187,10 @@ class ConfirmModalButton extends StatelessWidget {
                 onPressed: () {
                   schedulingList.verifyScheduling(
                       idSpecialty, idProfissional, idHospital, time, date);
-                  Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+                  schedulingList.isLoading
+                      ? Navigator.of(context)
+                          .pushReplacementNamed(AppRoutes.home)
+                      : CircularProgressIndicator();
                 },
                 child: const Text('Confirmar')),
           ),

@@ -28,6 +28,7 @@ class QueryScheduling extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
+                  const CircularProgressIndicator();
                   schedulinglist.remove(scheduling.idAgendamento);
                   Navigator.of(context).pushReplacementNamed(AppRoutes.home);
                 },

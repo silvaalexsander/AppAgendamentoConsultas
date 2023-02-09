@@ -29,8 +29,7 @@ class Login with ChangeNotifier {
       Map mapResponse = json.decode(response.body);
       token = mapResponse['token'];
       expireTo = mapResponse['expiration'];
-      var recipient = mapResponse['beneficiario'];
-      recipient = recipient['result'];
+      var recipient = mapResponse['beneficario'];
       recipientMaster = Recipient(
         idBeneficiario: recipient['idBeneficiario'],
         nome: recipient['nome'],
