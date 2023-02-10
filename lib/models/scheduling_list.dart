@@ -80,8 +80,8 @@ class ScheduligList with ChangeNotifier {
     int index =
         _items.indexWhere((element) => element.idAgendamento == idAgendamento);
     if (index != -1) {
-      _items.removeAt(index);
       await RequestHttp.deleteScheduling(idAgendamento);
+      _items.removeAt(index);
       await alterState();
       notifyListeners();
     }
@@ -104,8 +104,8 @@ class ScheduligList with ChangeNotifier {
     if (index == -1) {
       return;
     }
-
-    var scheduling = Scheduling(
+    await alterState();
+    Scheduling scheduling = Scheduling(
       idAgendamento: idAgendamento,
       idHospital: idHospital,
       idEspecialidade: idEspecialidade,
@@ -121,9 +121,10 @@ class ScheduligList with ChangeNotifier {
           await _profissionalList.getProfissional(idProfissional),
       idHospitalNavigation: await _hospitalList.getHospital(idHospital),
     );
-    _items[index] = scheduling;
-    ordena();
     await RequestHttp.patchScheduling(scheduling);
+    _items[index] = scheduling;
+    await alterState();
+    ordena();
     notifyListeners();
   }
 

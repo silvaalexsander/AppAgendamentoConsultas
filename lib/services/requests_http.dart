@@ -116,7 +116,7 @@ class RequestHttp {
     var url = '$baseUrl/Agendamento/$idAgendamento';
     var response = await http.delete(Uri.parse(url));
     if (response.statusCode == 200) {
-      return true;
+      return await true;
     } else {
       throw Exception('Failed to delete scheduling');
     }

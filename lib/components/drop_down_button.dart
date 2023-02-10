@@ -1,5 +1,6 @@
 import 'package:agendamentohospitalar/models/scheduling.dart';
 import 'package:agendamentohospitalar/models/scheduling_list.dart';
+import 'package:agendamentohospitalar/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/hospital_list.dart';
@@ -9,7 +10,6 @@ import '../models/specialty_list.dart';
 import 'package:intl/intl.dart';
 
 class DrowpDownButton extends StatefulWidget {
-  
   const DrowpDownButton({super.key});
 
   @override
@@ -27,6 +27,7 @@ class _DrowpDownButtonState extends State<DrowpDownButton> {
   String? horarioSelected = 'Selecione um Horário';
   DateTime? _selectedDate;
   bool exibButton = false;
+  bool _isSelected = false;
   List<String> horarios = [
     '08:00:00',
     '09:00:00',
@@ -166,6 +167,7 @@ class _DrowpDownButtonState extends State<DrowpDownButton> {
                       onTap: () {
                         setState(() {
                           idSpecialty = specialty.idEspecialidade;
+                          _isSelected = true;
                           // print(idSpecialty);
                         });
                       },
@@ -196,11 +198,12 @@ class _DrowpDownButtonState extends State<DrowpDownButton> {
                   hint: Text(profissionalSelected!),
                   items: profissionalList.items.map((profissional) {
                     return DropdownMenuItem(
+                      enabled: _isSelected,
                       value: profissional.nome,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(profissional.nome,
+                          Text(_isSelected ? profissional.nome : '',
                               style: const TextStyle(fontSize: 17)),
                         ],
                       ),
@@ -372,7 +375,9 @@ class _DrowpDownButtonState extends State<DrowpDownButton> {
                               idHospital!,
                               horarioMarcado!,
                               _selectedDate!);
-                          Navigator.of(context).pop();
+
+                          Navigator.of(context)
+                              .pushReplacementNamed(AppRoutes.home);
                         },
                         child: const Text('Atualizar Agendamento'),
                       ),

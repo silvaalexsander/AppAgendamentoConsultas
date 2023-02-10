@@ -14,7 +14,7 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: [
           AppBar(
-            title: const Text('Bem vindo!'),
+            title: const Text('Opções'),
             automaticallyImplyLeading: false,
           ),
           const Divider(),
@@ -66,7 +66,7 @@ class AppDrawer extends StatelessWidget {
               onTap: () {
                 var login = Provider.of<Login>(context, listen: false);
                 login.logout();
-                Navigator.of(context).popAndPushNamedls(AppRoutes.authpage);
+                Navigator.of(context).popAndPushNamed(AppRoutes.authpage);
               },
             ),
           ),
