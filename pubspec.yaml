@@ -39,6 +39,7 @@ dependencies:
   http: ^0.13.3
   asyncstate: ^0.0.3
   flutter_sms: ^2.3.3
+  url_launcher: ^6.1.9
   
 
 

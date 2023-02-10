@@ -1,6 +1,7 @@
 import 'package:agendamentohospitalar/models/scheduling_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/login_api.dart';
 import '../models/recipient_list.dart';
@@ -16,23 +17,27 @@ class TestePage extends StatefulWidget {
 class _TestePageState extends State<TestePage> {
   @override
   Widget build(BuildContext context) {
-    final recipientList = Provider.of<RecipientList>(context);
-    final scheduligList = Provider.of<ScheduligList>(context);
+    String query =
+        'Av. Albert Einstein, 627/701 - Morumbi, São Paulo - SP, 05652-900';
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Teste'),
       ),
-      body: recipientList.items.isEmpty
-          ? Center(
-              child: Text(
-                  scheduligList.items[0].idBeneficiarioNavigation!.nome),
-            )
-          : ListView.builder(
-              itemCount: recipientList.items.length,
-              itemBuilder: (ctx, i) => ListTile(
-                title: Text(recipientList.items[i].nome),
-              ),
-            ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () async {
+            final url =
+                'https://www.google.com/maps/search/?api=1&query=$query';
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              throw 'Não foi possível abrir o Google Maps';
+            }
+          },
+          child: const Text('Abrir Google Maps'),
+        ),
+      ),
     );
   }
 }

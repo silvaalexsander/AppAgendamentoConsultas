@@ -2,11 +2,35 @@ import 'package:agendamentohospitalar/pages/home_page.dart';
 import 'package:agendamentohospitalar/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../models/login_api.dart';
 
 class AppDrawer extends StatelessWidget {
-  const AppDrawer({super.key});
+  const AppDrawer() : super(key: const Key('AppDrawer'));
+
+  Future<void> _showExitDialog(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text('Saindo...'),
+              content: const Text('Deseja realmente sair?'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Não'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Provider.of<Login>(context, listen: false).logout();
+                    Navigator.of(context).pop();
+                    Navigator.of(context).popAndPushNamed(AppRoutes.authpage);
+                  },
+                  child: const Text('Sim'),
+                ),
+              ],
+            ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,26 +50,6 @@ class AppDrawer extends StatelessWidget {
                 onTap: () =>
                     Navigator.of(context).popAndPushNamed(AppRoutes.newquery)),
           ),
-          // const Divider(),
-          // Card(
-          //   child: ListTile(
-          //       leading: Icon(Icons.calendar_today,
-          //           color: Theme.of(context).colorScheme.primary),
-          //       title: const Text('Agendamentos'),
-          //       onTap: () => Navigator.of(context)
-          //           .popAndPushNamed(AppRoutes.listqueries)),
-          // ),
-          // const Divider(),
-          // Card(
-          //   child: ListTile(
-          //     leading: Icon(Icons.paste_sharp,
-          //         color: Theme.of(context).colorScheme.primary),
-          //     title: const Text('Consultas Realizadas'),
-          //     onTap: () {
-          //       Navigator.of(context).popAndPushNamed(AppRoutes.test);
-          //     },
-          //   ),
-          // ),
           const Divider(),
           Card(
             child: ListTile(
@@ -64,9 +68,7 @@ class AppDrawer extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary),
               title: const Text('Sair'),
               onTap: () {
-                var login = Provider.of<Login>(context, listen: false);
-                login.logout();
-                Navigator.of(context).popAndPushNamed(AppRoutes.authpage);
+                _showExitDialog(context);
               },
             ),
           ),

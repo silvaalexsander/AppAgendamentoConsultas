@@ -210,7 +210,6 @@ class RequestHttp {
     var body = json.encode(data);
 
     var url = '$baseUrl/Beneficiario/${recipient.idBeneficiario}';
-    print('$baseUrl/Beneficiario/${recipient.idBeneficiario}');
     var response =
         await http.patch(Uri.parse(url), headers: header, body: body);
     if (response.statusCode == 200 || response.statusCode == 201) {

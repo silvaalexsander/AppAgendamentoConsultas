@@ -247,6 +247,10 @@ class _DrowpDownButtonState extends State<DrowpDownButton> {
                               context: context,
                               initialDate: DateTime.now(),
                               firstDate: DateTime.now(),
+                              selectableDayPredicate: (DateTime date) {
+                                final dayOfWeek = date.weekday;
+                                return dayOfWeek != 6 && dayOfWeek != 7;
+                              },
                               lastDate:
                                   DateTime.now().add(const Duration(days: 180)),
                             ).then(

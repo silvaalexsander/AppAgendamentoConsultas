@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/scheduling.dart';
 
@@ -220,39 +221,45 @@ class QueryDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 0, left: 15, right: 15, bottom: 25),
-              child: InputDecorator(
-                decoration: const InputDecoration(
-                  labelText: 'Endereço',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.0),
+            GestureDetector(
+              onTap: () {
+                launch(
+                    'https://www.google.com/maps/search/?api=1&query=${scheduling.idHospitalNavigation!.endereco}');
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 0, left: 15, right: 15, bottom: 25),
+                child: InputDecorator(
+                  decoration: const InputDecoration(
+                    labelText: 'Endereço',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
+                      ),
                     ),
                   ),
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.business,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 20),
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Container(
-                          constraints: const BoxConstraints(
-                            maxWidth: 290,
-                          ),
-                          child: Text(
-                            scheduling.idHospitalNavigation!.endereco,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.business,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 20),
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Container(
+                            constraints: const BoxConstraints(
+                              maxWidth: 290,
+                            ),
+                            child: Text(
+                              scheduling.idHospitalNavigation!.endereco,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

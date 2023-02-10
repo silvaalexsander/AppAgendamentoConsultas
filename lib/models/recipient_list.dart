@@ -1,4 +1,3 @@
-import 'package:agendamentohospitalar/data/recipients_data.dart';
 import 'package:agendamentohospitalar/models/recipient.dart';
 import 'package:asyncstate/asyncstate.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import '../services/requests_http.dart';
 
 class RecipientList with ChangeNotifier, AsyncStateMixin {
-  List<Recipient> _items = []; //recipientsData;
+  List<Recipient> _items = [];
  
   List<Recipient> get items => [..._items];
 

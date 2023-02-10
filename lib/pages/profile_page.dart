@@ -54,9 +54,10 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         edit = false;
       });
-      await Login.login(
-          Login.recipientMaster!.email, Login.recipientMaster!.senha);
-      Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+      Login.login(Login.recipientMaster!.email, Login.recipientMaster!.senha)
+          .then((value) {
+        Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+      });
     } else {
       showDialog(
         context: context,
