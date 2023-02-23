@@ -68,4 +68,7 @@
   
   -  [x] `Tela de Perfil`
   <img src= "https://github.com/silvaalexsander/AppAgendamentoConsultas/blob/master/assets/images/dadosPessoais.jpeg" width=250px>
-  No perfil, é possível ver
+  No perfil, é possível ver os dados pessoais do usuário e é possível também editar algum dos dados.
+  
+  
+  
