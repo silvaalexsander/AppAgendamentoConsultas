@@ -1,6 +1,4 @@
-import 'package:agendamentohospitalar/models/hospital_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../components/drop_down_button.dart';
 

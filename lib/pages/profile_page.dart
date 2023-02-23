@@ -80,11 +80,9 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     String cpfConf = Login.recipientMaster!.cpf;
-    String cpfModificado =
+    String novoCPF =
         '${cpfConf.substring(0, 3)}.${cpfConf.substring(3, 6)}.${cpfConf.substring(6, 9)}-${cpfConf.substring(9, 11)}';
-    String telefoneConf = Login.recipientMaster!.telefone;
-    String telefoneModificado =
-        '(${telefoneConf.substring(0, 2)}) ${telefoneConf.substring(2, 7)}-${telefoneConf.substring(7, 11)}';
+    String cpfModificado = novoCPF.replaceRange(4, 11, '***.***');
 
     return Scaffold(
       appBar: AppBar(

@@ -190,7 +190,7 @@ class ConfirmModalButton extends StatelessWidget {
                   schedulingList.isLoading
                       ? Navigator.of(context)
                           .pushReplacementNamed(AppRoutes.home)
-                      : CircularProgressIndicator();
+                      : const CircularProgressIndicator();
                 },
                 child: const Text('Confirmar')),
           ),
