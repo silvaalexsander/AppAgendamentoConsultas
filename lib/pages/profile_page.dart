@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('Ocorreu um erro!'),
+          title: const Text('Ocorreu um erro!!'),
           content: const Text('Tente novamente mais tarde.'),
           actions: <Widget>[
             TextButton(
