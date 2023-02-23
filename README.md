@@ -1,16 +1,17 @@
-# agendamentohospitalar
 
-A new Flutter project.
 
-## Getting Started
+## Objetivo do projeto
+<p>O projeto foi desenvolvido para aprendizado na tecnlogia mobile usando Flutter/Dart. Para a persistência de todos os dados foi utilizado uma API desenvolvida em .NET.</p>
+<p>A finalidade do app é realizar o agendamento de consultas médicas.</p>
 
-This project is a starting point for a Flutter application.
+## 📁 Acesso ao projeto
+<p> Você pode ter acesso aos arquivos do projeto clicando aqui => https://github.com/silvaalexsander/AppAgendamentoConsultas/tree/master/lib
 
-A few resources to get you started if this is your first Flutter project:
+## ✔ Tecnologias utilizadas
+- ``Flutter``
+- ``.Net``
+- ``Dart``
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🛠️ Descrição/Funcionalidades do projeto
+-  [x] `Tela de Login / Cadastro`
+<img>https://github.com/silvaalexsander/AppAgendamentoConsultas/blob/master/assets/images/detalheAgendamento.png</img>
